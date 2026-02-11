@@ -1,0 +1,16 @@
+{
+  "name": "greeting-cli",
+  "version": "1.0.0",
+  "description": "Simple CLI to greet users",
+  "main": "cli.js",
+  "type": "module",
+  "bin": {
+    "greeting": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js"
+  },
+  "keywords": ["cli", "greeting"],
+  "author": "",
+  "license": "MIT"
+}
