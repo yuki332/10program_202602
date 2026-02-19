@@ -31,12 +31,18 @@ if (total < 0) {
   process.exit(1);
 }
 
-// 一人当たりの金額を計算
-const perPerson = total / people;
+// 消費税10%を加算した税込金額を計算
+const tax = Math.round(total * 0.1);
+const totalWithTax = total + tax;
+
+// 一人当たりの金額を計算（税込金額をもとに計算）
+const perPerson = totalWithTax / people;
 
 // 結果を出力（小数点以下を四捨五入）
 console.log("========================================");
-console.log(`合計金額: ${total.toLocaleString()}円`);
+console.log(`合計金額（税抜）: ${total.toLocaleString()}円`);
+console.log(`消費税（10%）: ${tax.toLocaleString()}円`);
+console.log(`合計金額（税込）: ${totalWithTax.toLocaleString()}円`);
 console.log(`人数: ${people}人`);
 console.log("========================================");
 console.log(`一人当たり: ${Math.round(perPerson).toLocaleString()}円`);
