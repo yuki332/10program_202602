@@ -77,6 +77,38 @@ app.post('/api/items', async (req, res) => {
 })
 
 /**
+ * PUT /api/items/:id - アイテム編集
+ *
+ * IPO:
+ * - Input: URLパラメータからアイテムIDを受け取り、クライアントから新しいタイトルを受け取る
+ * - Process: DBから該当アイテムのタイトルを更新
+ * - Output: 更新したアイテムをJSONで返す
+ */
+app.put('/api/items/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id)
+    const { title } = req.body
+
+    // バリデーション（入力チェック）
+    if (!title || title.trim() === '') {
+      return res.status(400).json({ error: 'タイトルを入力してください' })
+    }
+
+    // DBでアイテムを更新
+    const updatedItem = await prisma.item.update({
+      where: { id },
+      data: { title: title.trim() }
+    })
+
+    console.log('[SERVER] アイテムを更新: ID =', id, 'Title =', updatedItem.title)
+    res.json(updatedItem)
+  } catch (error) {
+    console.error('[SERVER] エラー:', error)
+    res.status(500).json({ error: 'アイテム更新に失敗しました' })
+  }
+})
+
+/**
  * DELETE /api/items/:id - アイテム削除
  *
  * IPO:

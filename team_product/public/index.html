@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base CRUD App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>アイテム管理</h1>
+
+        <!-- アイテム入力フォーム -->
+        <div class="form-group">
+            <input 
+                type="text" 
+                id="titleInput" 
+                placeholder="新しいアイテムを入力"
+                class="input-field"
+            >
+            <button id="addButton" class="btn btn-primary">追加</button>
+        </div>
+
+        <!-- アイテム一覧 -->
+        <div class="items-container">
+            <ul id="itemsList" class="items-list">
+                <!-- ここにアイテムが動的に追加される -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- エディタモーダル -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>アイテムを編集</h2>
+            <input 
+                type="text" 
+                id="editInput" 
+                class="input-field modal-input"
+                placeholder="新しい名称を入力"
+            >
+            <div class="modal-buttons">
+                <button id="saveButton" class="btn btn-primary">完了</button>
+                <button id="cancelButton" class="btn btn-secondary">キャンセル</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
