@@ -132,6 +132,47 @@
       }
 
       /**
+       * アイテムを編集
+       *
+       * IPO:
+       * - Input: 編集ボタンクリック（アイテムID）、新しいタイトル
+       * - Process: サーバーにPUTリクエスト → DB更新
+       * - Output: 一覧を再読み込み
+       */
+      async function editItem(id) {
+        const newTitle = prompt("新しいタイトルを入力してください");
+
+        // 入力チェック
+        if (!newTitle || newTitle.trim() === "") {
+          return;
+        }
+
+        console.log("[CLIENT] アイテムを編集: ID =", id, "新タイトル =", newTitle);
+
+        try {
+          // サーバーにPUTリクエスト
+          const response = await fetch(`/api/items/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: newTitle }),
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error);
+          }
+
+          // 一覧を再読み込み
+          await loadItems();
+
+          console.log("[CLIENT] 編集完了");
+        } catch (error) {
+          console.error("[CLIENT] エラー:", error);
+          alert("編集に失敗しました: " + error.message);
+        }
+      }
+
+      /**
        * アイテムを削除
        *
        * IPO:
@@ -188,6 +229,7 @@
           li.className = "item";
           li.innerHTML = `
           <span class="item-title">${escapeHtml(item.title)}</span>
+          <button class="edit-button" onclick="editItem(${item.id})">編集</button>
           <button class="delete-button" onclick="deleteItem(${item.id})">削除</button>
         `;
           itemList.appendChild(li);
